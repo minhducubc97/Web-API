@@ -178,6 +178,7 @@ def api_patch(bookid):
 @app.route('/books/<bookid>', methods=['DELETE'])
 @requires_auth
 def api_delete(bookid):
+    row_id = 0
     bookid = int(bookid)
     if (bookid >= len(json_list) or bookid <= 0):
         return 'Error 404: Book not found'
@@ -190,6 +191,9 @@ def api_delete(bookid):
         for row in reader:
             if (row['id'] != 'id' and int(row['id']) == bookid):
                 continue
+            else:
+                row_id += 1
+            row['id'] = row_id
             writer.writerow(row)
         del json_list[bookid]
     shutil.move(tmpFile.name, filename)
