@@ -92,7 +92,7 @@ def api_post():
         json_request = request.json
         if ('title' not in json_request) or ('link' not in json_request) or ('author' not in json_request) or ('year' not in json_request):
             return "Error 400: Missing fields in POST request!"
-        row = [len(json_list),
+        row = [str(len(json_list)),
                json_request['title'],
                json_request['author'],
                json_request['year'],
@@ -132,7 +132,7 @@ def api_put(bookid):
                 continue
             if int(row['id']) == bookid:
                 row = {
-                    'id': bookid,
+                    'id': row['id'],
                     'title': json_request['title'],
                     'author': json_request['author'],
                     'year': json_request['year'],
@@ -178,6 +178,7 @@ def api_patch(bookid):
 @app.route('/books/<bookid>', methods=['DELETE'])
 @requires_auth
 def api_delete(bookid):
+    shift = False
     row_id = 0
     bookid = int(bookid)
     if (bookid >= len(json_list) or bookid <= 0):
@@ -190,12 +191,14 @@ def api_delete(bookid):
         writer = csv.DictWriter(tmpFile, fieldnames=fields)
         for row in reader:
             if (row['id'] != 'id' and int(row['id']) == bookid):
+                shift = True
                 continue
-            else:
-                row_id += 1
-            row['id'] = row_id
+            if shift:
+                row['id'] = str(row_id)
+                json_list[row_id] = row
             writer.writerow(row)
-        del json_list[bookid]
+            row_id += 1
+        del json_list[-1]
     shutil.move(tmpFile.name, filename)
     return 'Row deleted'
 
