@@ -71,7 +71,7 @@ def api_root():
 
 @app.route('/books', methods=['GET'])
 def api_getall():
-    json_list_string = json.dumps(json_list)
+    json_list_string = json.dumps(json_list[1:])
     return Response(json_list_string, status=200, mimetype='application/json')
 
 
