@@ -28,6 +28,10 @@ GET: \books\<bookid>
 }
 ```
 
+## References/Libraries:
+
+- Flask
+
 ## Deployed app: 
 
 The app is available online at: [Web API](https://ebooks-web-api.herokuapp.com/). However, note that the app is a bit flaky on Heroku, but works perfectly locally.
