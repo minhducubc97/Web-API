@@ -16,8 +16,9 @@ PATCH:  \books\<bookid>
 DELETE: \books\<bookid>
 ```
 
-Sample response from GET: \books\<bookid>:
+Sample response:
 ```js
+GET: \books\<bookid>
 {
     "author": "Morse, Katharine Duncan",
     "id": "1006",
