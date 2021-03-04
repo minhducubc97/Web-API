@@ -15,10 +15,11 @@ def make_json_list(csvFilePath):
         for row in reader:
             if len(row) != 0:
                 data.append({
-                    'title': row[0],
-                    'author': row[1],
-                    'year': row[2],
-                    'link': row[3]
+                    'id': row[0],
+                    'title': row[1],
+                    'author': row[2],
+                    'year': row[3],
+                    'link': row[4]
                 })
     return data
 
